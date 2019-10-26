@@ -111,7 +111,9 @@ namespace Power_Manager
 
         public void OnTaskAborted(IShutdownTask task)
         {
-            MessageBox.Show("Shutdown Task has been aborted");
+            btnAutoShutdown.Enabled = true;
+            btnShutdown.Enabled = true;
+            MessageBox.Show("Shutdown Task has been aborted", "Information");
         }
 
         public void OnTaskStarted(IShutdownTask task)

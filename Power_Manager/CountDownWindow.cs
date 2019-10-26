@@ -47,13 +47,21 @@ namespace Power_Manager
                 return;
             }
 
-            DialogResult rs = MessageBox.Show("Abort shutdown task?", "Abort Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult rs = MessageBox.Show(this, "Abort shutdown task?", "Abort Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (rs == DialogResult.Yes)
             {
                 if (task.IsTaskProtected())
                 {
-                    //display window for user to input password
-                    MessageBox.Show("This task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, "This task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    do
+                    {
+                        //display window for user to input password                       
+                        string userEntr = InputDialog.ShowInputDialog(this, "Enter your password");
+                        if (task.Abort(userEntr))
+                        {                            
+                            return;
+                        }
+                    }while(MessageBox.Show(this, "Invalid Password", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry);
                 }
                 try
                 {
@@ -61,7 +69,7 @@ namespace Power_Manager
                 }
                 catch (AbortFailedException arg)
                 {
-                    MessageBox.Show("Failed to abort task, task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, "Failed to abort task, task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Cancel = true;
                 }
             }
@@ -69,6 +77,11 @@ namespace Power_Manager
             {
                 e.Cancel = true;
             }
+        }
+
+        private void btnAbortShutdown_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

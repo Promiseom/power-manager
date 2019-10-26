@@ -353,9 +353,24 @@
             // autoShutdownTime
             // 
             this.autoShutdownTime.Location = new System.Drawing.Point(321, 22);
+            this.autoShutdownTime.Maximum = new decimal(new int[] {
+            86400,
+            0,
+            0,
+            0});
+            this.autoShutdownTime.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.autoShutdownTime.Name = "autoShutdownTime";
             this.autoShutdownTime.Size = new System.Drawing.Size(117, 20);
             this.autoShutdownTime.TabIndex = 2;
+            this.autoShutdownTime.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label4
             // 
@@ -396,7 +411,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 274);
             this.Controls.Add(this.tabControl1);
+            this.MaximumSize = new System.Drawing.Size(577, 313);
+            this.MinimumSize = new System.Drawing.Size(577, 313);
             this.Name = "Power_Manager";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Power Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Power_Manager_FormClosing);
             this.Load += new System.EventHandler(this.Power_Manager_Load);

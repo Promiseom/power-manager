@@ -30,8 +30,7 @@
         {
             this.cd_timer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.abortShutdown = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.shutdownMessage = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
@@ -59,23 +58,16 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Timer";
             // 
-            // button1
+            // abortShutdown
             // 
-            this.button1.Location = new System.Drawing.Point(78, 227);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Full Message";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(195, 227);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Abort Shutdown";
-            this.button2.UseVisualStyleBackColor = true;
+            this.abortShutdown.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.abortShutdown.Location = new System.Drawing.Point(130, 227);
+            this.abortShutdown.Name = "abortShutdown";
+            this.abortShutdown.Size = new System.Drawing.Size(111, 23);
+            this.abortShutdown.TabIndex = 4;
+            this.abortShutdown.Text = "Abort Shutdown";
+            this.abortShutdown.UseVisualStyleBackColor = true;
+            this.abortShutdown.Click += new System.EventHandler(this.btnAbortShutdown_Click);
             // 
             // panel1
             // 
@@ -104,13 +96,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.abortShutdown;
             this.ClientSize = new System.Drawing.Size(376, 262);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.abortShutdown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cd_timer);
+            this.MaximumSize = new System.Drawing.Size(392, 301);
+            this.MinimumSize = new System.Drawing.Size(392, 301);
             this.Name = "CountDownWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Shutdown";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CountDownWindow_FormClosing);
             this.panel1.ResumeLayout(false);
@@ -123,8 +118,7 @@
 
         private System.Windows.Forms.Label cd_timer;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button abortShutdown;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RichTextBox shutdownMessage;
     }

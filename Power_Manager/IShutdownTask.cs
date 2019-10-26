@@ -14,6 +14,14 @@ namespace Power_Manager
         }
     }
 
+    public class InvalidPasswordException : ApplicationException
+    {
+        public InvalidPasswordException(string message) : base(message)
+        {
+
+        }
+    }
+
     public interface IShutdownTask
     {
         /// <summary>

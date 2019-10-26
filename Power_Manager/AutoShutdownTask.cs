@@ -104,6 +104,7 @@ namespace Power_Manager
                 isCountDownStarted = false;
                 if (taskListener != null)
                 {
+                    isProtected = false;
                     cdWindow.Close();
                     ShutdownManager.Shutdown(shutdownAction);                    
                     taskListener.OnTaskCompleted(this);
@@ -122,7 +123,7 @@ namespace Power_Manager
 
             //create and display the shutdown window
             cdWindow = new CountDownWindow(this);
-            cdWindow.Show();
+            cdWindow.Show((Form)taskListener);
             cdWindow.SetTimer(shutdownTime);
 
             if (this.shutdownMessage != null)
@@ -161,7 +162,14 @@ namespace Power_Manager
         {
             if (isProtected)
             {
-                //check that password is correct before aborting task
+                if (pwd == shutdownPassword)
+                {
+                    //remove protection since the password is correct
+                    isProtected = false;  
+                    Abort();
+                    return true;
+                }
+                return false;
             }
             //ignore password
             return true;
