@@ -1,0 +1,180 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Threading;
+
+namespace Power_Manager
+{   
+    public class AutoShutdownTask : IShutdownTask
+    {        
+        private ShutdownManager.SHUTDOWNACTION shutdownAction;                    //holds the index of the combo box containing the shutdown action to be performed
+        private int shutdownTime;                      //time to wait before performing shutdown
+        private string shutdownPassword;          //if not null, must be provided, to cancel shutdown
+        private string shutdownMessage;           //message to be displayed before shutdown if provided
+        private bool isProtected;                 //set to true if the task is passwordd protected
+
+        private int countDownTimer;
+        private bool isCountDownStarted;        //true if the countdown has started
+
+        //handles countdown concurrency        
+        private BackgroundWorker backgroundWorker;
+        private CountDownWindow cdWindow;
+
+        private ITaskManager taskListener;
+
+        public int ShutdownTime { set { shutdownTime = value; } get { return shutdownTime; } }
+        public string ShutdownMessage 
+        { 
+            set 
+            {
+                if (value.Length >= 1)
+                {
+                    shutdownMessage = value;
+                }                 
+            } 
+            get 
+            { 
+                return shutdownMessage; 
+            } 
+        }
+   
+        //creates a simple shutdown with action and time
+        public AutoShutdownTask(ShutdownManager.SHUTDOWNACTION shutdownAction, int shutdownTime)
+        {
+            isProtected = false;
+            this.shutdownAction = shutdownAction;
+            this.shutdownTime = shutdownTime;
+            this.countDownTimer = shutdownTime;
+            this.isCountDownStarted = false;
+            this.backgroundWorker = new BackgroundWorker();
+        
+            //prepare the backgroundworker
+            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
+            backgroundWorker.RunWorkerAsync();
+        }
+
+        //creates an auto shutdown task with additional shutdown password and shutdown message
+        public AutoShutdownTask(ShutdownManager.SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownPassword, string shutdownMessage) : this(shutdownAction, shutdownTime)
+        {
+            isProtected = true;
+            this.shutdownPassword = shutdownPassword;
+        }
+
+        public void SetITaskListener(ITaskManager newListener)
+        {
+            taskListener = newListener;
+        }
+
+        public bool ChangeShutdownPassword(string pwd)
+        {
+            //cannot change password after shutdown has started
+            if (isCountDownStarted) { return false; }
+            //ignore empty passwords
+            if (pwd.Length <= 0) { return false; }
+
+            this.shutdownPassword = pwd;
+            isProtected = true;
+            return true;
+        }
+
+        public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                if(isCountDownStarted)
+                {
+                    countDownTimer--;
+                    backgroundWorker.ReportProgress(countDownTimer);                    
+                }
+                Thread.Sleep(1000);
+            }            
+        }
+
+        public void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (countDownTimer < 0)
+            {
+                isCountDownStarted = false;
+                if (taskListener != null)
+                {
+                    cdWindow.Close();
+                    ShutdownManager.Shutdown(shutdownAction);                    
+                    taskListener.OnTaskCompleted(this);
+                }
+                //prevent the display of negative number
+                return;
+            }
+            cdWindow.SetTimer(countDownTimer);            
+        }
+
+        public bool Start()
+        {           
+            //set the timer            
+            countDownTimer = shutdownTime;
+            isCountDownStarted = true;
+
+            //create and display the shutdown window
+            cdWindow = new CountDownWindow(this);
+            cdWindow.Show();
+            cdWindow.SetTimer(shutdownTime);
+
+            if (this.shutdownMessage != null)
+            {
+                cdWindow.SetMessage(this.shutdownMessage);
+            }
+
+            if (taskListener != null)
+            {
+                taskListener.OnTaskStarted(this);
+            }
+            return isCountDownStarted;
+        }
+
+        /// <summary>
+        /// Aborts an autoshutdown task that has been started
+        /// Throws AbortFailedException is attempting to abort a protected task
+        /// </summary>
+        public bool Abort()
+        {
+            if (isProtected)
+            {
+                throw new AbortFailedException("A password is required to abort a protected shutdown task, no password provided. Consider using Abort(string)");
+            }
+
+            isCountDownStarted = false;
+            backgroundWorker.CancelAsync();
+            if (taskListener != null)
+            {
+                taskListener.OnTaskAborted(this);
+            }            
+            return true;
+        }
+
+        public bool Abort(string pwd)
+        {
+            if (isProtected)
+            {
+                //check that password is correct before aborting task
+            }
+            //ignore password
+            return true;
+        }
+
+        public bool IsTaskProtected()
+        {
+            return isProtected;
+        }
+
+        public bool IsTaskRunning()
+        {
+            return isCountDownStarted;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Power_Manager\Power_Manager\bin\Debug\Power_Manager.exe.config
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\bin\Debug\Power_Manager.exe.config
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\bin\Debug\Power_Manager.exe
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\bin\Debug\Power_Manager.pdb
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.csprojResolveAssemblyReference.cache
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.Power_Manager.resources
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.Properties.Resources.resources
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.csproj.GenerateResource.Cache
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.exe
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.pdb
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.CountDownWindow.resources
