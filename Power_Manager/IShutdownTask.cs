@@ -40,5 +40,6 @@ namespace Power_Manager
 
         bool IsTaskProtected();
         bool IsTaskRunning();
+        void SetCountdownVisibility(bool value);
     }
 }

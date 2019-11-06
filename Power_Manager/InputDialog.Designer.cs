@@ -55,6 +55,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(179, 75);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -85,10 +86,11 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtInput);
+            this.MaximumSize = new System.Drawing.Size(332, 149);
             this.MinimumSize = new System.Drawing.Size(332, 134);
             this.Name = "InputDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Message";
+            this.Text = "Input Manager";
             this.ResumeLayout(false);
             this.PerformLayout();
 

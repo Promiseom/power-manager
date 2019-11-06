@@ -22,6 +22,7 @@ namespace Power_Manager
         public static String ShowInputDialog(Form parent, string title)
         {
             dialog = new InputDialog();
+            dialog.Text = title;
             if (dialog.ShowDialog(parent) == DialogResult.OK)
             {
                 return dialog.txtInput.Text;

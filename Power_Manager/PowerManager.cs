@@ -14,6 +14,11 @@ namespace Power_Manager
 {
     public partial class Power_Manager : Form, ITaskManager
     {
+        PowerLineStatus prevPowerLineStatus;
+        bool pNotif = false;
+        //indicates the hide window option has been confirmed
+        bool isHideConfirmed;
+
         public Power_Manager()
         {
             InitializeComponent();          
@@ -21,13 +26,19 @@ namespace Power_Manager
 
         private void Power_Manager_Load(object sender, EventArgs e)
         {
+            isHideConfirmed = false;
+            
+            //setup the battery status background monitor
             batteryStatusMonitor.WorkerReportsProgress = true;
             batteryStatusMonitor.WorkerSupportsCancellation = false;
             batteryStatusMonitor.RunWorkerAsync();
-
+                        
+            cbShutdownAction.Items.AddRange(ShutdownManager.GetShutdownActions(SHUTDOWN_TYPE.SHUTDOWN_POWER_LOSS));
+            cbAutoShutdownAction.Items.AddRange(ShutdownManager.GetShutdownActions(SHUTDOWN_TYPE.SHUTDOWN_NORMAL));
             cbShutdownAction.SelectedIndex = 0;
-            cbAutoShutdownAction.Items.AddRange(ShutdownManager.GetShutdownActions());
             cbAutoShutdownAction.SelectedIndex = 0;
+                                    
+            prevPowerLineStatus = SystemInformation.PowerStatus.PowerLineStatus;
         }
 
         private void batteryStatusMonitor_DoWork(object sender, DoWorkEventArgs e)
@@ -40,9 +51,64 @@ namespace Power_Manager
         }
 
         private void batteryStatusMonitor_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {            
+        {
+            CheckPowerLineStatus();
+            UpdateBatteryStats();
+        }
+
+        private void CheckPowerLineStatus()
+        {
+            //checks if power has been lost or restored
+            PowerLineStatus currPowerLineStatus= SystemInformation.PowerStatus.PowerLineStatus;
+            if (prevPowerLineStatus == PowerLineStatus.Online)
+            {
+                if (currPowerLineStatus == PowerLineStatus.Offline || currPowerLineStatus == PowerLineStatus.Unknown)
+                {
+                    if (!pNotif)
+                    {
+                        pNotif = true;
+                        switch(cbShutdownAction.SelectedIndex)
+                        {
+                            case 0:
+                                int action = SelectionInputDialog.ShowSelectionInputDialog(this, "Choose Shutdown Action", ShutdownManager.GetShutdownActions(SHUTDOWN_TYPE.SHUTDOWN_POWER_LOSS));
+                                //make sure we have a valid shutdown action
+                                if (action >= 0)
+                                {
+                                    ShutdownManager.Shutdown((SHUTDOWN_ACTION_POWER_LOSS)action);
+                                }
+                             break;
+                            default:
+                                SHUTDOWN_ACTION_POWER_LOSS sdAction = (SHUTDOWN_ACTION_POWER_LOSS)cbShutdownAction.SelectedIndex;
+                                ShutdownManager.Shutdown(sdAction); 
+                                //MessageBox.Show(this, "Computer Shutdown Mode: " + sdAction.ToString(), "Warning");
+                                break;
+                        }
+                        //notifications come as dialogs which will block the 
+                        //execution of the statements after it
+                        //execution continues when the dialog is closed,
+                        //when this happens, notification is closed
+                        pNotif = false;
+                    }
+                }
+            }
+            else
+            {
+                if (currPowerLineStatus == PowerLineStatus.Online)
+                {
+                    if(pNotif)
+                    {
+                        SelectionInputDialog.CloseDialog();
+                        pNotif = false;
+                    }
+                }
+            }
+            prevPowerLineStatus = currPowerLineStatus;
+        }
+
+        private void UpdateBatteryStats()
+        {
             lbBatteryStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
-            
+
             if (lbBatteryStatus.Text != BatteryChargeStatus.NoSystemBattery.ToString())
             {
                 lbBatteryPercent.Text = String.Format("{0}%", SystemInformation.PowerStatus.BatteryLifePercent * 100);
@@ -65,7 +131,7 @@ namespace Power_Manager
 
             //set the color of the percent label based on the battery percentage
             if (SystemInformation.PowerStatus.BatteryLifePercent * 100 < 30 && SystemInformation.PowerStatus.PowerLineStatus != PowerLineStatus.Online)
-            {      
+            {
                 //if the battery percent is less than 30 and the system is not plugged in
                 lbBatteryPercent.ForeColor = Color.Red;
             }
@@ -73,7 +139,7 @@ namespace Power_Manager
             {
                 //make sure there's battery installed for the text color to be green
                 lbBatteryPercent.ForeColor = (SystemInformation.PowerStatus.BatteryChargeStatus == BatteryChargeStatus.NoSystemBattery) ? Color.Red : Color.DarkGreen;
-            }                        
+            }              
         }
 
         private void cbEditSettings_CheckedChanged(object sender, EventArgs e)
@@ -95,10 +161,11 @@ namespace Power_Manager
             string message = shutdownMessage.Text;
 
             //display the countdown window
-            AutoShutdownTask task = new AutoShutdownTask((ShutdownManager.SHUTDOWNACTION)action, time);
+            AutoShutdownTask task = new AutoShutdownTask((SHUTDOWNACTION)action, time);
             task.ChangeShutdownPassword(password);
             task.ShutdownMessage = message;
             task.SetITaskListener(this);
+            task.SetCountdownVisibility(!cbHideCountdown.Checked);
             task.Start();
         }
 
@@ -113,7 +180,7 @@ namespace Power_Manager
         {
             btnAutoShutdown.Enabled = true;
             btnShutdown.Enabled = true;
-            MessageBox.Show("Shutdown Task has been aborted", "Information");
+            MessageBox.Show("Shutdown Task has been aborted", "Information", MessageBoxButtons.OK);
         }
 
         public void OnTaskStarted(IShutdownTask task)
@@ -123,9 +190,33 @@ namespace Power_Manager
             //MessageBox.Show("Shutdown Task has been started");
         }
 
-        private void Power_Manager_FormClosing(object sender, FormClosingEventArgs e)
+        private void btnShutdown_Click(object sender, EventArgs e)
         {
+            SHUTDOWNACTION ac = (SHUTDOWNACTION)cbAutoShutdownAction.SelectedIndex;
+            DialogResult rs = MessageBox.Show(this, "Computer will " + ac.ToString() +" immediately. Are you sure you want to continue?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(rs == DialogResult.Yes)
+            {                
+                ShutdownManager.Shutdown(ac);
+            }
+        }
 
+        private void cbHideCountdown_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isChecked = ((CheckBox)sender).Checked;
+            if (isChecked && !isHideConfirmed)
+            {
+                ((CheckBox)sender).Checked = false;
+                DialogResult rs = MessageBox.Show(this, "Are you sure?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (rs == DialogResult.OK)
+                {
+                    isHideConfirmed = true;
+                    ((CheckBox)sender).Checked = true;                    
+                }
+            }
+            else
+            {
+                isHideConfirmed = false;
+            }
         }
     }
 }

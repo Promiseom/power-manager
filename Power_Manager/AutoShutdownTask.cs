@@ -11,12 +11,16 @@ namespace Power_Manager
 {   
     public class AutoShutdownTask : IShutdownTask
     {        
-        private ShutdownManager.SHUTDOWNACTION shutdownAction;                    //holds the index of the combo box containing the shutdown action to be performed
+        private SHUTDOWNACTION shutdownAction; //holds the index of the combo box containing the shutdown action to be performed
         private int shutdownTime;                      //time to wait before performing shutdown
         private string shutdownPassword;          //if not null, must be provided, to cancel shutdown
         private string shutdownMessage;           //message to be displayed before shutdown if provided
         private bool isProtected;                 //set to true if the task is passwordd protected
 
+        //determines of the countdown window visible
+        //if set to be invisible, the user will have to set the time from 0 to set time
+        //when the window should appear, this is mandatory
+        private bool isCountdownVisible;
         private int countDownTimer;
         private bool isCountDownStarted;        //true if the countdown has started
 
@@ -43,7 +47,7 @@ namespace Power_Manager
         }
    
         //creates a simple shutdown with action and time
-        public AutoShutdownTask(ShutdownManager.SHUTDOWNACTION shutdownAction, int shutdownTime)
+        public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime)
         {
             isProtected = false;
             this.shutdownAction = shutdownAction;
@@ -61,7 +65,7 @@ namespace Power_Manager
         }
 
         //creates an auto shutdown task with additional shutdown password and shutdown message
-        public AutoShutdownTask(ShutdownManager.SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownPassword, string shutdownMessage) : this(shutdownAction, shutdownTime)
+        public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownPassword, string shutdownMessage) : this(shutdownAction, shutdownTime)
         {
             isProtected = true;
             this.shutdownPassword = shutdownPassword;
@@ -124,6 +128,8 @@ namespace Power_Manager
             //create and display the shutdown window
             cdWindow = new CountDownWindow(this);
             cdWindow.Show((Form)taskListener);
+            cdWindow.Visible = isCountdownVisible;
+            cdWindow.ShowInTaskbar = isCountdownVisible;
             cdWindow.SetTimer(shutdownTime);
 
             if (this.shutdownMessage != null)
@@ -136,6 +142,11 @@ namespace Power_Manager
                 taskListener.OnTaskStarted(this);
             }
             return isCountDownStarted;
+        }
+
+        public void SetCountdownVisibility(bool value)
+        {
+            isCountdownVisible = value;
         }
 
         /// <summary>

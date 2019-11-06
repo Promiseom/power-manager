@@ -10,3 +10,4 @@ C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.pdb
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.CountDownWindow.resources
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.InputDialog.resources
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Power_Manager\Power_Manager\obj\Debug\Power_Manager.SelectionInputDialog.resources

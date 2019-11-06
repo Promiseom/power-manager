@@ -42,7 +42,7 @@
             this.cd_timer.BackColor = System.Drawing.SystemColors.Control;
             this.cd_timer.Font = new System.Drawing.Font("Courier New", 50F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cd_timer.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cd_timer.Location = new System.Drawing.Point(14, 50);
+            this.cd_timer.Location = new System.Drawing.Point(12, 33);
             this.cd_timer.Name = "cd_timer";
             this.cd_timer.Size = new System.Drawing.Size(353, 76);
             this.cd_timer.TabIndex = 0;
@@ -52,7 +52,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(167, 34);
+            this.label2.Location = new System.Drawing.Point(161, 17);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 16);
             this.label2.TabIndex = 1;
@@ -61,7 +61,7 @@
             // abortShutdown
             // 
             this.abortShutdown.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.abortShutdown.Location = new System.Drawing.Point(130, 227);
+            this.abortShutdown.Location = new System.Drawing.Point(134, 226);
             this.abortShutdown.Name = "abortShutdown";
             this.abortShutdown.Size = new System.Drawing.Size(111, 23);
             this.abortShutdown.TabIndex = 4;

@@ -46,6 +46,7 @@
             this.labelBatteryPercent = new System.Windows.Forms.Label();
             this.labelBatteryStatus = new System.Windows.Forms.Label();
             this.tabShutdownPage = new System.Windows.Forms.TabPage();
+            this.cbHideCountdown = new System.Windows.Forms.CheckBox();
             this.btnShutdown = new System.Windows.Forms.Button();
             this.btnAutoShutdown = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -197,12 +198,6 @@
             // 
             this.cbShutdownAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbShutdownAction.FormattingEnabled = true;
-            this.cbShutdownAction.Items.AddRange(new object[] {
-            "Prompt For Action",
-            "Nothing",
-            "Sleep",
-            "Hibernating",
-            "Shutdown"});
             this.cbShutdownAction.Location = new System.Drawing.Point(176, 19);
             this.cbShutdownAction.Name = "cbShutdownAction";
             this.cbShutdownAction.Size = new System.Drawing.Size(150, 21);
@@ -248,6 +243,7 @@
             // 
             // tabShutdownPage
             // 
+            this.tabShutdownPage.Controls.Add(this.cbHideCountdown);
             this.tabShutdownPage.Controls.Add(this.btnShutdown);
             this.tabShutdownPage.Controls.Add(this.btnAutoShutdown);
             this.tabShutdownPage.Controls.Add(this.label8);
@@ -268,6 +264,17 @@
             this.tabShutdownPage.Text = "Shutdown";
             this.tabShutdownPage.UseVisualStyleBackColor = true;
             // 
+            // cbHideCountdown
+            // 
+            this.cbHideCountdown.AutoSize = true;
+            this.cbHideCountdown.Location = new System.Drawing.Point(235, 74);
+            this.cbHideCountdown.Name = "cbHideCountdown";
+            this.cbHideCountdown.Size = new System.Drawing.Size(105, 17);
+            this.cbHideCountdown.TabIndex = 12;
+            this.cbHideCountdown.Text = "Hide Countdown";
+            this.cbHideCountdown.UseVisualStyleBackColor = true;
+            this.cbHideCountdown.CheckedChanged += new System.EventHandler(this.cbHideCountdown_CheckedChanged);
+            // 
             // btnShutdown
             // 
             this.btnShutdown.Location = new System.Drawing.Point(304, 177);
@@ -276,6 +283,7 @@
             this.btnShutdown.TabIndex = 11;
             this.btnShutdown.Text = "Shutdown Now";
             this.btnShutdown.UseVisualStyleBackColor = true;
+            this.btnShutdown.Click += new System.EventHandler(this.btnShutdown_Click);
             // 
             // btnAutoShutdown
             // 
@@ -417,7 +425,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Power Manager";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Power_Manager_FormClosing);
             this.Load += new System.EventHandler(this.Power_Manager_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabStatusPage.ResumeLayout(false);
@@ -466,6 +473,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lbPowerLineStatus;
         private System.Windows.Forms.Label labelPowerLine;
+        private System.Windows.Forms.CheckBox cbHideCountdown;
     }
 }
 

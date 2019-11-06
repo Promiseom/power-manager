@@ -8,19 +8,34 @@ using System.Windows.Forms;
 
 namespace Power_Manager
 {
+    public enum SHUTDOWN_TYPE { SHUTDOWN_NORMAL, SHUTDOWN_POWER_LOSS };
+    public enum SHUTDOWNACTION { SLEEP, HIBERNATE, LOGOFF, SHUTDOWN };
+    public enum SHUTDOWN_ACTION_POWER_LOSS { PROMPT_FOR_ACTION, NOTHING, SLEEP, HIBERNATE, SHUTDOWN };
+    
     public class ShutdownManager
-    {
-        public enum SHUTDOWNACTION { SLEEP, HIBERNATE, LOGOFF, SHUTDOWN };
-
-        public static string[] GetShutdownActions()
+    {    
+        public static string[] GetShutdownActions(SHUTDOWN_TYPE type)
         {
-            string[] objs = new string[4];
-            objs[0] = SHUTDOWNACTION.SLEEP.ToString();
-            objs[1] = SHUTDOWNACTION.HIBERNATE.ToString();
-            objs[2] = SHUTDOWNACTION.LOGOFF.ToString();
-            objs[3] = SHUTDOWNACTION.SHUTDOWN.ToString();
-            return objs;
+            if (type == SHUTDOWN_TYPE.SHUTDOWN_NORMAL)
+            {
+                string[] objs = new string[4];
+                objs[0] = SHUTDOWNACTION.SLEEP.ToString();
+                objs[1] = SHUTDOWNACTION.HIBERNATE.ToString();
+                objs[2] = SHUTDOWNACTION.LOGOFF.ToString();
+                objs[3] = SHUTDOWNACTION.SHUTDOWN.ToString();
+                return objs;
+            }
+
+            string[] obj = new string[5];
+            obj[0] = SHUTDOWN_ACTION_POWER_LOSS.PROMPT_FOR_ACTION.ToString();
+            obj[1] = SHUTDOWN_ACTION_POWER_LOSS.NOTHING.ToString();
+            obj[2] = SHUTDOWN_ACTION_POWER_LOSS.SLEEP.ToString();
+            obj[3] = SHUTDOWN_ACTION_POWER_LOSS.HIBERNATE.ToString();
+            obj[4] = SHUTDOWN_ACTION_POWER_LOSS.SHUTDOWN.ToString();
+            return obj;
         }
+
+
 
         public static void Shutdown(SHUTDOWNACTION action)
         {
@@ -41,6 +56,22 @@ namespace Power_Manager
                 case SHUTDOWNACTION.SHUTDOWN:
                     Process.Start(@"..\cmd_shutdown\shutdown.exe");
                     //MessageBox.Show("System is shutting down", "Note");
+                    break;
+            }
+        }
+
+        public static void Shutdown(SHUTDOWN_ACTION_POWER_LOSS action)
+        {
+            switch (action)
+            {
+                case SHUTDOWN_ACTION_POWER_LOSS.SLEEP:
+                    Application.SetSuspendState(PowerState.Suspend, true, false);
+                    break;
+                case SHUTDOWN_ACTION_POWER_LOSS.HIBERNATE:
+                    Application.SetSuspendState(PowerState.Hibernate, true, false);
+                    break;
+                case SHUTDOWN_ACTION_POWER_LOSS.SHUTDOWN:
+                    Process.Start(@"..\cmd_shutdown\shutdown.exe");
                     break;
             }
         }
