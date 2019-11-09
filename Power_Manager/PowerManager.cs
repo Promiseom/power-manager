@@ -14,10 +14,12 @@ namespace Power_Manager
 {
     public partial class Power_Manager : Form, ITaskManager
     {
-        PowerLineStatus prevPowerLineStatus;
-        bool pNotif = false;
+        private PowerLineStatus prevPowerLineStatus;
+        private bool pNotif = false;
         //indicates the hide window option has been confirmed
-        bool isHideConfirmed;
+        private bool isHideConfirmed;
+        //this must be set if the window is hidden
+        private int invisibilityTimeout;
 
         public Power_Manager()
         {
@@ -165,7 +167,7 @@ namespace Power_Manager
             task.ChangeShutdownPassword(password);
             task.ShutdownMessage = message;
             task.SetITaskListener(this);
-            task.SetCountdownVisibility(!cbHideCountdown.Checked);
+            task.SetCountdownVisibility(!cbHideCountdown.Checked, invisibilityTimeout);
             task.Start();
         }
 
@@ -206,11 +208,15 @@ namespace Power_Manager
             if (isChecked && !isHideConfirmed)
             {
                 ((CheckBox)sender).Checked = false;
-                DialogResult rs = MessageBox.Show(this, "Are you sure?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (rs == DialogResult.OK)
+                try
                 {
+                    int time = NumericInputDialog.ShowInputDialog(this, "Choose Time", "What Time Do You Want The Countdown Window To Appear");
                     isHideConfirmed = true;
-                    ((CheckBox)sender).Checked = true;                    
+                    invisibilityTimeout = time;
+                    ((CheckBox)sender).Checked = true;
+                    MessageBox.Show(this, "Countdown window will reappear in " + time + " seconds.", "Notice!");
+                }catch(DialogCancelResultException arg)
+                {                    
                 }
             }
             else

@@ -51,11 +51,18 @@
     <Compile Include="CountDownWindow.Designer.cs">
       <DependentUpon>CountDownWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputDialog.cs">
+    <Compile Include="DialogCancelResultException.cs" />
+    <Compile Include="NumericInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InputDialog.Designer.cs">
-      <DependentUpon>InputDialog.cs</DependentUpon>
+    <Compile Include="NumericInputDialog.Designer.cs">
+      <DependentUpon>NumericInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordInputDialog.Designer.cs">
+      <DependentUpon>PasswordInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ITaskManager.cs" />
     <Compile Include="PowerManager.cs">
@@ -77,8 +84,11 @@
     <EmbeddedResource Include="CountDownWindow.resx">
       <DependentUpon>CountDownWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InputDialog.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
+    <EmbeddedResource Include="NumericInputDialog.resx">
+      <DependentUpon>NumericInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PasswordInputDialog.resx">
+      <DependentUpon>PasswordInputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PowerManager.resx">
       <DependentUpon>PowerManager.cs</DependentUpon>

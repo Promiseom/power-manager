@@ -56,7 +56,7 @@ namespace Power_Manager
                     do
                     {
                         //display window for user to input password                       
-                        string userEntr = InputDialog.ShowInputDialog(this, "Enter your password");
+                        string userEntr = PasswordInputDialog.ShowInputDialog(this, "Enter your password");
                         if (task.Abort(userEntr))
                         {                            
                             return;

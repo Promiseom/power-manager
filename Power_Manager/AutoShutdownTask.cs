@@ -21,6 +21,7 @@ namespace Power_Manager
         //if set to be invisible, the user will have to set the time from 0 to set time
         //when the window should appear, this is mandatory
         private bool isCountdownVisible;
+        private int invisibilityTimeTout;
         private int countDownTimer;
         private bool isCountDownStarted;        //true if the countdown has started
 
@@ -103,6 +104,16 @@ namespace Power_Manager
 
         public void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            //if the countdown window is invisible
+            //make it visible at the right time
+            if(!isCountdownVisible)
+            {
+                if(countDownTimer == invisibilityTimeTout)
+                {
+                    cdWindow.Visible = true;
+                }
+            }
+
             if (countDownTimer < 0)
             {
                 isCountDownStarted = false;
@@ -128,6 +139,8 @@ namespace Power_Manager
             //create and display the shutdown window
             cdWindow = new CountDownWindow(this);
             cdWindow.Show((Form)taskListener);
+
+            //if the countdown window is invisible, it should not show in the taskbar
             cdWindow.Visible = isCountdownVisible;
             cdWindow.ShowInTaskbar = isCountdownVisible;
             cdWindow.SetTimer(shutdownTime);
@@ -144,9 +157,15 @@ namespace Power_Manager
             return isCountDownStarted;
         }
 
-        public void SetCountdownVisibility(bool value)
+        /// <summary>
+        /// Called to hide the countdown window.
+        /// When this function is called, the invisibility timeout has to be set
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetCountdownVisibility(bool value, int invisibilityTimout)
         {
             isCountdownVisible = value;
+            this.invisibilityTimeTout = invisibilityTimout;
         }
 
         /// <summary>

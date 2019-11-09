@@ -35,11 +35,6 @@ namespace Power_Manager
             return -1; //nothing was selected
         }
 
-        private void selectionInputDialog_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
         public static void CloseDialog()
         {
             if (sDialog != null)

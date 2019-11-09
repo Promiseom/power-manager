@@ -10,18 +10,18 @@ using System.Windows.Forms;
 
 namespace Power_Manager
 {
-    public partial class InputDialog : Form
+    public partial class PasswordInputDialog : Form
     {
-        private static InputDialog dialog;
+        private static PasswordInputDialog dialog;
 
-        private InputDialog()
+        private PasswordInputDialog()
         {
             InitializeComponent();
         }
 
         public static String ShowInputDialog(Form parent, string title)
         {
-            dialog = new InputDialog();
+            dialog = new PasswordInputDialog();
             dialog.Text = title;
             if (dialog.ShowDialog(parent) == DialogResult.OK)
             {
@@ -29,7 +29,6 @@ namespace Power_Manager
             }
             return "";
         }
-
 
         private void btnOk_Click(object sender, EventArgs e)
         {
@@ -44,6 +43,15 @@ namespace Power_Manager
         private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtInput.UseSystemPasswordChar = !((CheckBox)sender).Checked;
+        }
+
+        public static void CloseDialog()
+        {
+            if (dialog != null)
+            {
+                dialog.Close();
+                dialog = null;
+            }
         }
     }
 }

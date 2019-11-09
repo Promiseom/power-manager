@@ -74,7 +74,6 @@
             this.MinimumSize = new System.Drawing.Size(332, 149);
             this.Name = "SelectionInputDialog";
             this.Text = "Selection Input Dialog";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.selectionInputDialog_FormClosed);
             this.ResumeLayout(false);
 
         }

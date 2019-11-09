@@ -393,7 +393,7 @@
             // 
             this.cbAutoShutdownAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAutoShutdownAction.FormattingEnabled = true;
-            this.cbAutoShutdownAction.Location = new System.Drawing.Point(129, 19);
+            this.cbAutoShutdownAction.Location = new System.Drawing.Point(129, 21);
             this.cbAutoShutdownAction.Name = "cbAutoShutdownAction";
             this.cbAutoShutdownAction.Size = new System.Drawing.Size(147, 21);
             this.cbAutoShutdownAction.TabIndex = 0;
