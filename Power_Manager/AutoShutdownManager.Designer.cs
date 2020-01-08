@@ -157,7 +157,7 @@
             // 
             this.btnDiscardChanges.Location = new System.Drawing.Point(259, 63);
             this.btnDiscardChanges.Name = "btnDiscardChanges";
-            this.btnDiscardChanges.Size = new System.Drawing.Size(114, 23);
+            this.btnDiscardChanges.Size = new System.Drawing.Size(111, 31);
             this.btnDiscardChanges.TabIndex = 6;
             this.btnDiscardChanges.Text = "Discard Changes";
             this.btnDiscardChanges.UseVisualStyleBackColor = true;
@@ -166,7 +166,7 @@
             // 
             this.btnSaveChanges.Location = new System.Drawing.Point(127, 63);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(114, 23);
+            this.btnSaveChanges.Size = new System.Drawing.Size(111, 31);
             this.btnSaveChanges.TabIndex = 5;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
@@ -416,7 +416,7 @@
             this.batteryStatusMonitor.DoWork += new System.ComponentModel.DoWorkEventHandler(this.batteryStatusMonitor_DoWork);
             this.batteryStatusMonitor.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.batteryStatusMonitor_ProgressChanged);
             // 
-            // Power_Manager
+            // AutoShutdownManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -424,7 +424,7 @@
             this.Controls.Add(this.tabControl1);
             this.MaximumSize = new System.Drawing.Size(577, 313);
             this.MinimumSize = new System.Drawing.Size(577, 313);
-            this.Name = "Power_Manager";
+            this.Name = "AutoShutdownManager";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Shutdown Manager";

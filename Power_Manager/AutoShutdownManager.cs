@@ -174,8 +174,9 @@ namespace Power_Manager
         public void OnTaskCompleted(IShutdownTask task)
         {
             btnAutoShutdown.Enabled = true;
-            btnShutdown.Enabled = true;
+            btnShutdown.Enabled = true;            
             //MessageBox.Show("Shutdown task has completed");
+            this.Visible = true;
         }
 
         public void OnTaskAborted(IShutdownTask task)
