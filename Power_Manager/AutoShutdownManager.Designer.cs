@@ -1,6 +1,6 @@
 ﻿namespace Power_Manager
 {
-    partial class Power_Manager
+    partial class AutoShutdownManager
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabStatusPage = new System.Windows.Forms.TabPage();
             this.lbPowerLineStatus = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             this.cbAutoShutdownAction = new System.Windows.Forms.ComboBox();
             this.tabLogPage = new System.Windows.Forms.TabPage();
             this.batteryStatusMonitor = new System.ComponentModel.BackgroundWorker();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabStatusPage.SuspendLayout();
             this.settingsPanel.SuspendLayout();
@@ -269,17 +271,18 @@
             this.cbHideCountdown.AutoSize = true;
             this.cbHideCountdown.Location = new System.Drawing.Point(235, 74);
             this.cbHideCountdown.Name = "cbHideCountdown";
-            this.cbHideCountdown.Size = new System.Drawing.Size(105, 17);
+            this.cbHideCountdown.Size = new System.Drawing.Size(90, 17);
             this.cbHideCountdown.TabIndex = 12;
-            this.cbHideCountdown.Text = "Hide Countdown";
+            this.cbHideCountdown.Text = "Hide Window";
             this.cbHideCountdown.UseVisualStyleBackColor = true;
             this.cbHideCountdown.CheckedChanged += new System.EventHandler(this.cbHideCountdown_CheckedChanged);
+            this.cbHideCountdown.MouseHover += new System.EventHandler(this.cbHideCountdown_MouseHover);
             // 
             // btnShutdown
             // 
             this.btnShutdown.Location = new System.Drawing.Point(304, 177);
             this.btnShutdown.Name = "btnShutdown";
-            this.btnShutdown.Size = new System.Drawing.Size(108, 23);
+            this.btnShutdown.Size = new System.Drawing.Size(111, 31);
             this.btnShutdown.TabIndex = 11;
             this.btnShutdown.Text = "Shutdown Now";
             this.btnShutdown.UseVisualStyleBackColor = true;
@@ -289,7 +292,7 @@
             // 
             this.btnAutoShutdown.Location = new System.Drawing.Point(170, 177);
             this.btnAutoShutdown.Name = "btnAutoShutdown";
-            this.btnAutoShutdown.Size = new System.Drawing.Size(108, 23);
+            this.btnAutoShutdown.Size = new System.Drawing.Size(111, 31);
             this.btnAutoShutdown.TabIndex = 10;
             this.btnAutoShutdown.Text = "Auto Shutdown";
             this.btnAutoShutdown.UseVisualStyleBackColor = true;
@@ -424,7 +427,7 @@
             this.Name = "Power_Manager";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Windows Power Manager";
+            this.Text = "Windows Shutdown Manager";
             this.Load += new System.EventHandler(this.Power_Manager_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabStatusPage.ResumeLayout(false);
@@ -474,6 +477,7 @@
         private System.Windows.Forms.Label lbPowerLineStatus;
         private System.Windows.Forms.Label labelPowerLine;
         private System.Windows.Forms.CheckBox cbHideCountdown;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

@@ -83,6 +83,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Name = "NumericInputDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Choose Time";
             ((System.ComponentModel.ISupportInitialize)(this.time)).EndInit();
             this.ResumeLayout(false);

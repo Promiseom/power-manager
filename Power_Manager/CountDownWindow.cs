@@ -10,6 +10,13 @@ using System.Windows.Forms;
 
 namespace Power_Manager
 {
+    /// <summary>
+    /// Count down window displays the timer to the user as it counts down.
+    /// The window contains an abort button which can be used to cancel the shutdown and
+    /// optional shutdown message to be displayed to the user.
+    /// 
+    /// Shutdown message usually contains a reason for the shutdown.
+    /// </summary>
     public partial class CountDownWindow : Form
     {
         //used to communicate with the tasking managing this window

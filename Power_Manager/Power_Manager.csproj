@@ -65,11 +65,11 @@
       <DependentUpon>PasswordInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ITaskManager.cs" />
-    <Compile Include="PowerManager.cs">
+    <Compile Include="AutoShutdownManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PowerManager.Designer.cs">
-      <DependentUpon>PowerManager.cs</DependentUpon>
+    <Compile Include="AutoShutdownManager.Designer.cs">
+      <DependentUpon>AutoShutdownManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,8 +90,8 @@
     <EmbeddedResource Include="PasswordInputDialog.resx">
       <DependentUpon>PasswordInputDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PowerManager.resx">
-      <DependentUpon>PowerManager.cs</DependentUpon>
+    <EmbeddedResource Include="AutoShutdownManager.resx">
+      <DependentUpon>AutoShutdownManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

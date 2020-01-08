@@ -16,7 +16,7 @@ namespace Power_Manager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Power_Manager());
+            Application.Run(new AutoShutdownManager());
         }
     }
 }

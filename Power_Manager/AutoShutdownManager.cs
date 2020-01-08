@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Power_Manager
 {
-    public partial class Power_Manager : Form, ITaskManager
+    public partial class AutoShutdownManager : Form, ITaskManager
     {
         private PowerLineStatus prevPowerLineStatus;
         private bool pNotif = false;
@@ -21,7 +21,7 @@ namespace Power_Manager
         //this must be set if the window is hidden
         private int invisibilityTimeout;
 
-        public Power_Manager()
+        public AutoShutdownManager()
         {
             InitializeComponent();          
         }
@@ -183,6 +183,7 @@ namespace Power_Manager
             btnAutoShutdown.Enabled = true;
             btnShutdown.Enabled = true;
             MessageBox.Show("Shutdown Task has been aborted", "Information", MessageBoxButtons.OK);
+            this.Visible = true;
         }
 
         public void OnTaskStarted(IShutdownTask task)
@@ -190,6 +191,24 @@ namespace Power_Manager
             btnShutdown.Enabled = false;
             btnAutoShutdown.Enabled = false;
             //MessageBox.Show("Shutdown Task has been started");
+        }
+
+        public void OnTaskValueChanged(TASKVALUES val, dynamic newValue)
+        {
+            switch (val)
+            {
+                case TASKVALUES.TIME_REMAINING:
+                    break;
+                case TASKVALUES.WINDOW_VISIBILITY:
+                    //make sure value is expected type
+                    if (!(newValue is Boolean))
+                    {
+                        throw new ArgumentException("type of new value does not match expected type Boolean");
+                    }
+                    //set the new visibilty of the manager window
+                    this.Visible = newValue;
+                    break;
+            }
         }
 
         private void btnShutdown_Click(object sender, EventArgs e)
@@ -223,6 +242,16 @@ namespace Power_Manager
             {
                 isHideConfirmed = false;
             }
+        }
+
+        /// <summary>
+        /// show a tooltip when the user hovers over this control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbHideCountdown_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(cbHideCountdown, "Hides the shutdown manager until time set to reappear.");
         }
     }
 }

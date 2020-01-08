@@ -9,6 +9,14 @@ using System.Threading;
 
 namespace Power_Manager
 {   
+    /// <summary>
+    /// A single shutdown task. 
+    /// Each shutdown task contains the following:
+    /// Shutdown Passwor, is left blank if not set,
+    /// Shutdown Message, is left blank if not set,
+    /// Countdown visibility so the countdown can be visible to the user of hidden.
+    /// Countdown window invisibility timeout so the countdown can reappear after sometime after being hidden.
+    /// </summary>
     public class AutoShutdownTask : IShutdownTask
     {        
         private SHUTDOWNACTION shutdownAction; //holds the index of the combo box containing the shutdown action to be performed
@@ -110,7 +118,8 @@ namespace Power_Manager
             {
                 if(countDownTimer == invisibilityTimeTout)
                 {
-                    cdWindow.Visible = true;
+                    isCountdownVisible = true;
+                    cdWindow.Visible = isCountdownVisible;
                 }
             }
 
@@ -157,6 +166,13 @@ namespace Power_Manager
             return isCountDownStarted;
         }
 
+        public void SetCountdownVisibility(bool value)
+        {
+            isCountdownVisible = value;
+            //inform tasklistener about the visibility change
+            taskListener.OnTaskValueChanged(TASKVALUES.WINDOW_VISIBILITY, isCountdownVisible);
+        }
+
         /// <summary>
         /// Called to hide the countdown window.
         /// When this function is called, the invisibility timeout has to be set
@@ -164,7 +180,7 @@ namespace Power_Manager
         /// <param name="value"></param>
         public void SetCountdownVisibility(bool value, int invisibilityTimout)
         {
-            isCountdownVisible = value;
+            SetCountdownVisibility(value);
             this.invisibilityTimeTout = invisibilityTimout;
         }
 
