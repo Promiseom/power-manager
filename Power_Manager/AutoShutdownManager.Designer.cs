@@ -190,12 +190,12 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(362, 30);
+            this.label2.Location = new System.Drawing.Point(311, 30);
             this.label2.Margin = new System.Windows.Forms.Padding(10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(131, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "After (Seconds)";
+            this.label2.Text = "Shutdown After (Seconds)";
             // 
             // cbShutdownAction
             // 
@@ -412,10 +412,10 @@
             // 
             // tabLogPage
             // 
-            this.tabLogPage.Location = new System.Drawing.Point(4, 22);
+            this.tabLogPage.Location = new System.Drawing.Point(4, 29);
             this.tabLogPage.Name = "tabLogPage";
             this.tabLogPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLogPage.Size = new System.Drawing.Size(529, 263);
+            this.tabLogPage.Size = new System.Drawing.Size(529, 256);
             this.tabLogPage.TabIndex = 2;
             this.tabLogPage.Text = "Log";
             this.tabLogPage.UseVisualStyleBackColor = true;
