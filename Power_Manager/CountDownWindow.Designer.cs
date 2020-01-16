@@ -119,7 +119,7 @@
             this.MinimumSize = new System.Drawing.Size(392, 310);
             this.Name = "CountDownWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Countown Window";
+            this.Text = "Countdown Window";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CountDownWindow_FormClosing);
             this.panel1.ResumeLayout(false);

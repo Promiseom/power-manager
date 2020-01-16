@@ -161,11 +161,13 @@ namespace Power_Manager
             int time = (int)autoShutdownTime.Value;
             string password = shutdownPassword.Text;
             string message = shutdownMessage.Text;
+            //not cancellable if checked
+            bool isCancellable = !cbLockTask.Checked;
 
             //display the countdown window
-            AutoShutdownTask task = new AutoShutdownTask((SHUTDOWNACTION)action, time);
-            task.ChangeShutdownPassword(password);
-            task.ShutdownMessage = message;
+            AutoShutdownTask task = (password.Length <= 0)? new AutoShutdownTask((SHUTDOWNACTION)action, time, message, isCancellable) : new AutoShutdownTask((SHUTDOWNACTION)action, time, password, message);
+            //task.ChangeShutdownPassword(password);
+            //task.ShutdownMessage = message;
             task.SetITaskListener(this);
             task.SetCountdownVisibility(!cbHideCountdown.Checked, invisibilityTimeout);
             task.Start();
@@ -253,6 +255,22 @@ namespace Power_Manager
         private void cbHideCountdown_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(cbHideCountdown, "Hides the shutdown manager until time set to reappear.");
+        }
+
+        private void AutoShutdownManager_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon.Visible = true;
+            }
+        }
+
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
         }
     }
 }

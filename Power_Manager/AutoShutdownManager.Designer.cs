@@ -38,7 +38,6 @@
             this.settingsPanel = new System.Windows.Forms.GroupBox();
             this.btnDiscardChanges = new System.Windows.Forms.Button();
             this.btnSaveChanges = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.shutdownTime = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.cbShutdownAction = new System.Windows.Forms.ComboBox();
@@ -63,6 +62,8 @@
             this.tabLogPage = new System.Windows.Forms.TabPage();
             this.batteryStatusMonitor = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cbLockTask = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabStatusPage.SuspendLayout();
             this.settingsPanel.SuspendLayout();
@@ -76,10 +77,12 @@
             this.tabControl1.Controls.Add(this.tabStatusPage);
             this.tabControl1.Controls.Add(this.tabShutdownPage);
             this.tabControl1.Controls.Add(this.tabLogPage);
+            this.tabControl1.ItemSize = new System.Drawing.Size(96, 25);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(537, 250);
+            this.tabControl1.Size = new System.Drawing.Size(537, 289);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
             // tabStatusPage
@@ -92,10 +95,10 @@
             this.tabStatusPage.Controls.Add(this.cbEditSettings);
             this.tabStatusPage.Controls.Add(this.labelBatteryPercent);
             this.tabStatusPage.Controls.Add(this.labelBatteryStatus);
-            this.tabStatusPage.Location = new System.Drawing.Point(4, 22);
+            this.tabStatusPage.Location = new System.Drawing.Point(4, 29);
             this.tabStatusPage.Name = "tabStatusPage";
             this.tabStatusPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStatusPage.Size = new System.Drawing.Size(529, 224);
+            this.tabStatusPage.Size = new System.Drawing.Size(529, 256);
             this.tabStatusPage.TabIndex = 0;
             this.tabStatusPage.Text = "Battery Status";
             this.tabStatusPage.UseVisualStyleBackColor = true;
@@ -103,7 +106,8 @@
             // lbPowerLineStatus
             // 
             this.lbPowerLineStatus.AutoSize = true;
-            this.lbPowerLineStatus.Location = new System.Drawing.Point(87, 20);
+            this.lbPowerLineStatus.Location = new System.Drawing.Point(90, 12);
+            this.lbPowerLineStatus.Margin = new System.Windows.Forms.Padding(10);
             this.lbPowerLineStatus.Name = "lbPowerLineStatus";
             this.lbPowerLineStatus.Size = new System.Drawing.Size(37, 13);
             this.lbPowerLineStatus.TabIndex = 7;
@@ -112,7 +116,8 @@
             // labelPowerLine
             // 
             this.labelPowerLine.AutoSize = true;
-            this.labelPowerLine.Location = new System.Drawing.Point(6, 20);
+            this.labelPowerLine.Location = new System.Drawing.Point(6, 12);
+            this.labelPowerLine.Margin = new System.Windows.Forms.Padding(10);
             this.labelPowerLine.Name = "labelPowerLine";
             this.labelPowerLine.Size = new System.Drawing.Size(80, 13);
             this.labelPowerLine.TabIndex = 6;
@@ -121,7 +126,8 @@
             // lbBatteryStatus
             // 
             this.lbBatteryStatus.AutoSize = true;
-            this.lbBatteryStatus.Location = new System.Drawing.Point(87, 33);
+            this.lbBatteryStatus.Location = new System.Drawing.Point(90, 34);
+            this.lbBatteryStatus.Margin = new System.Windows.Forms.Padding(10);
             this.lbBatteryStatus.Name = "lbBatteryStatus";
             this.lbBatteryStatus.Size = new System.Drawing.Size(63, 13);
             this.lbBatteryStatus.TabIndex = 5;
@@ -130,7 +136,8 @@
             // lbBatteryPercent
             // 
             this.lbBatteryPercent.AutoSize = true;
-            this.lbBatteryPercent.Location = new System.Drawing.Point(87, 46);
+            this.lbBatteryPercent.Location = new System.Drawing.Point(90, 58);
+            this.lbBatteryPercent.Margin = new System.Windows.Forms.Padding(10);
             this.lbBatteryPercent.Name = "lbBatteryPercent";
             this.lbBatteryPercent.Size = new System.Drawing.Size(33, 13);
             this.lbBatteryPercent.TabIndex = 4;
@@ -140,7 +147,6 @@
             // 
             this.settingsPanel.Controls.Add(this.btnDiscardChanges);
             this.settingsPanel.Controls.Add(this.btnSaveChanges);
-            this.settingsPanel.Controls.Add(this.label3);
             this.settingsPanel.Controls.Add(this.shutdownTime);
             this.settingsPanel.Controls.Add(this.label2);
             this.settingsPanel.Controls.Add(this.cbShutdownAction);
@@ -148,14 +154,15 @@
             this.settingsPanel.Enabled = false;
             this.settingsPanel.Location = new System.Drawing.Point(6, 115);
             this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(517, 103);
+            this.settingsPanel.Size = new System.Drawing.Size(517, 135);
             this.settingsPanel.TabIndex = 3;
             this.settingsPanel.TabStop = false;
             this.settingsPanel.Text = "Auto Shutdown";
             // 
             // btnDiscardChanges
             // 
-            this.btnDiscardChanges.Location = new System.Drawing.Point(259, 63);
+            this.btnDiscardChanges.Location = new System.Drawing.Point(270, 82);
+            this.btnDiscardChanges.Margin = new System.Windows.Forms.Padding(10);
             this.btnDiscardChanges.Name = "btnDiscardChanges";
             this.btnDiscardChanges.Size = new System.Drawing.Size(111, 31);
             this.btnDiscardChanges.TabIndex = 6;
@@ -164,51 +171,47 @@
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(127, 63);
+            this.btnSaveChanges.Location = new System.Drawing.Point(139, 83);
+            this.btnSaveChanges.Margin = new System.Windows.Forms.Padding(10);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(111, 31);
             this.btnSaveChanges.TabIndex = 5;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(448, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Seconds";
-            // 
             // shutdownTime
             // 
-            this.shutdownTime.Location = new System.Drawing.Point(370, 20);
+            this.shutdownTime.Location = new System.Drawing.Point(270, 51);
+            this.shutdownTime.Margin = new System.Windows.Forms.Padding(10);
             this.shutdownTime.Name = "shutdownTime";
-            this.shutdownTime.Size = new System.Drawing.Size(72, 20);
+            this.shutdownTime.Size = new System.Drawing.Size(172, 20);
             this.shutdownTime.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(335, 22);
+            this.label2.Location = new System.Drawing.Point(362, 30);
+            this.label2.Margin = new System.Windows.Forms.Padding(10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "After";
+            this.label2.Text = "After (Seconds)";
             // 
             // cbShutdownAction
             // 
             this.cbShutdownAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbShutdownAction.FormattingEnabled = true;
-            this.cbShutdownAction.Location = new System.Drawing.Point(176, 19);
+            this.cbShutdownAction.Location = new System.Drawing.Point(78, 51);
+            this.cbShutdownAction.Margin = new System.Windows.Forms.Padding(10);
             this.cbShutdownAction.Name = "cbShutdownAction";
-            this.cbShutdownAction.Size = new System.Drawing.Size(150, 21);
+            this.cbShutdownAction.Size = new System.Drawing.Size(172, 21);
             this.cbShutdownAction.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 22);
+            this.label1.Location = new System.Drawing.Point(75, 30);
+            this.label1.Margin = new System.Windows.Forms.Padding(10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(152, 13);
             this.label1.TabIndex = 0;
@@ -217,7 +220,8 @@
             // cbEditSettings
             // 
             this.cbEditSettings.AutoSize = true;
-            this.cbEditSettings.Location = new System.Drawing.Point(6, 76);
+            this.cbEditSettings.Location = new System.Drawing.Point(9, 83);
+            this.cbEditSettings.Margin = new System.Windows.Forms.Padding(10);
             this.cbEditSettings.Name = "cbEditSettings";
             this.cbEditSettings.Size = new System.Drawing.Size(144, 17);
             this.cbEditSettings.TabIndex = 2;
@@ -228,7 +232,8 @@
             // labelBatteryPercent
             // 
             this.labelBatteryPercent.AutoSize = true;
-            this.labelBatteryPercent.Location = new System.Drawing.Point(6, 46);
+            this.labelBatteryPercent.Location = new System.Drawing.Point(6, 58);
+            this.labelBatteryPercent.Margin = new System.Windows.Forms.Padding(10);
             this.labelBatteryPercent.Name = "labelBatteryPercent";
             this.labelBatteryPercent.Size = new System.Drawing.Size(83, 13);
             this.labelBatteryPercent.TabIndex = 1;
@@ -237,7 +242,8 @@
             // labelBatteryStatus
             // 
             this.labelBatteryStatus.AutoSize = true;
-            this.labelBatteryStatus.Location = new System.Drawing.Point(5, 33);
+            this.labelBatteryStatus.Location = new System.Drawing.Point(6, 34);
+            this.labelBatteryStatus.Margin = new System.Windows.Forms.Padding(10);
             this.labelBatteryStatus.Name = "labelBatteryStatus";
             this.labelBatteryStatus.Size = new System.Drawing.Size(76, 13);
             this.labelBatteryStatus.TabIndex = 0;
@@ -245,6 +251,7 @@
             // 
             // tabShutdownPage
             // 
+            this.tabShutdownPage.Controls.Add(this.cbLockTask);
             this.tabShutdownPage.Controls.Add(this.cbHideCountdown);
             this.tabShutdownPage.Controls.Add(this.btnShutdown);
             this.tabShutdownPage.Controls.Add(this.btnAutoShutdown);
@@ -258,18 +265,19 @@
             this.tabShutdownPage.Controls.Add(this.autoShutdownTime);
             this.tabShutdownPage.Controls.Add(this.label4);
             this.tabShutdownPage.Controls.Add(this.cbAutoShutdownAction);
-            this.tabShutdownPage.Location = new System.Drawing.Point(4, 22);
+            this.tabShutdownPage.Location = new System.Drawing.Point(4, 29);
             this.tabShutdownPage.Name = "tabShutdownPage";
             this.tabShutdownPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabShutdownPage.Size = new System.Drawing.Size(529, 224);
+            this.tabShutdownPage.Size = new System.Drawing.Size(529, 256);
             this.tabShutdownPage.TabIndex = 1;
             this.tabShutdownPage.Text = "Shutdown";
+            this.tabShutdownPage.ToolTipText = "A locked task is not abortable.";
             this.tabShutdownPage.UseVisualStyleBackColor = true;
             // 
             // cbHideCountdown
             // 
             this.cbHideCountdown.AutoSize = true;
-            this.cbHideCountdown.Location = new System.Drawing.Point(235, 74);
+            this.cbHideCountdown.Location = new System.Drawing.Point(235, 100);
             this.cbHideCountdown.Name = "cbHideCountdown";
             this.cbHideCountdown.Size = new System.Drawing.Size(90, 17);
             this.cbHideCountdown.TabIndex = 12;
@@ -280,7 +288,7 @@
             // 
             // btnShutdown
             // 
-            this.btnShutdown.Location = new System.Drawing.Point(304, 177);
+            this.btnShutdown.Location = new System.Drawing.Point(285, 213);
             this.btnShutdown.Name = "btnShutdown";
             this.btnShutdown.Size = new System.Drawing.Size(111, 31);
             this.btnShutdown.TabIndex = 11;
@@ -290,18 +298,19 @@
             // 
             // btnAutoShutdown
             // 
-            this.btnAutoShutdown.Location = new System.Drawing.Point(170, 177);
+            this.btnAutoShutdown.BackColor = System.Drawing.Color.Transparent;
+            this.btnAutoShutdown.Location = new System.Drawing.Point(151, 213);
             this.btnAutoShutdown.Name = "btnAutoShutdown";
             this.btnAutoShutdown.Size = new System.Drawing.Size(111, 31);
             this.btnAutoShutdown.TabIndex = 10;
             this.btnAutoShutdown.Text = "Auto Shutdown";
-            this.btnAutoShutdown.UseVisualStyleBackColor = true;
+            this.btnAutoShutdown.UseVisualStyleBackColor = false;
             this.btnAutoShutdown.Click += new System.EventHandler(this.btnAutoShutdown_Click);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 51);
+            this.label8.Location = new System.Drawing.Point(18, 63);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(107, 13);
             this.label8.TabIndex = 9;
@@ -310,7 +319,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 97);
+            this.label7.Location = new System.Drawing.Point(19, 136);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 13);
             this.label7.TabIndex = 8;
@@ -336,7 +345,7 @@
             // 
             // shutdownMessage
             // 
-            this.shutdownMessage.Location = new System.Drawing.Point(129, 97);
+            this.shutdownMessage.Location = new System.Drawing.Point(129, 136);
             this.shutdownMessage.Name = "shutdownMessage";
             this.shutdownMessage.Size = new System.Drawing.Size(364, 60);
             this.shutdownMessage.TabIndex = 5;
@@ -345,7 +354,7 @@
             // cbShowPassword
             // 
             this.cbShowPassword.AutoSize = true;
-            this.cbShowPassword.Location = new System.Drawing.Point(129, 74);
+            this.cbShowPassword.Location = new System.Drawing.Point(129, 100);
             this.cbShowPassword.Name = "cbShowPassword";
             this.cbShowPassword.Size = new System.Drawing.Size(102, 17);
             this.cbShowPassword.TabIndex = 4;
@@ -355,7 +364,7 @@
             // 
             // shutdownPassword
             // 
-            this.shutdownPassword.Location = new System.Drawing.Point(129, 48);
+            this.shutdownPassword.Location = new System.Drawing.Point(128, 60);
             this.shutdownPassword.Name = "shutdownPassword";
             this.shutdownPassword.Size = new System.Drawing.Size(364, 20);
             this.shutdownPassword.TabIndex = 3;
@@ -406,7 +415,7 @@
             this.tabLogPage.Location = new System.Drawing.Point(4, 22);
             this.tabLogPage.Name = "tabLogPage";
             this.tabLogPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLogPage.Size = new System.Drawing.Size(529, 224);
+            this.tabLogPage.Size = new System.Drawing.Size(529, 263);
             this.tabLogPage.TabIndex = 2;
             this.tabLogPage.Text = "Log";
             this.tabLogPage.UseVisualStyleBackColor = true;
@@ -416,19 +425,34 @@
             this.batteryStatusMonitor.DoWork += new System.ComponentModel.DoWorkEventHandler(this.batteryStatusMonitor_DoWork);
             this.batteryStatusMonitor.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.batteryStatusMonitor_ProgressChanged);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Text = "Shutdown Manager";
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            // 
+            // cbLockTask
+            // 
+            this.cbLockTask.AutoSize = true;
+            this.cbLockTask.Location = new System.Drawing.Point(331, 100);
+            this.cbLockTask.Name = "cbLockTask";
+            this.cbLockTask.Size = new System.Drawing.Size(77, 17);
+            this.cbLockTask.TabIndex = 13;
+            this.cbLockTask.Text = "Lock Task";
+            this.toolTip.SetToolTip(this.cbLockTask, "A locked task cannot be aborted.");
+            this.cbLockTask.UseVisualStyleBackColor = true;
+            // 
             // AutoShutdownManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 274);
+            this.ClientSize = new System.Drawing.Size(561, 312);
             this.Controls.Add(this.tabControl1);
-            this.MaximumSize = new System.Drawing.Size(577, 313);
-            this.MinimumSize = new System.Drawing.Size(577, 313);
             this.Name = "AutoShutdownManager";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Shutdown Manager";
             this.Load += new System.EventHandler(this.Power_Manager_Load);
+            this.Resize += new System.EventHandler(this.AutoShutdownManager_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabStatusPage.ResumeLayout(false);
             this.tabStatusPage.PerformLayout();
@@ -453,7 +477,6 @@
         private System.Windows.Forms.CheckBox cbEditSettings;
         private System.Windows.Forms.Label labelBatteryPercent;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown shutdownTime;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbShutdownAction;
@@ -478,6 +501,8 @@
         private System.Windows.Forms.Label labelPowerLine;
         private System.Windows.Forms.CheckBox cbHideCountdown;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.CheckBox cbLockTask;
     }
 }
 

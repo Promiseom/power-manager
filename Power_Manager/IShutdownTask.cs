@@ -37,7 +37,12 @@ namespace Power_Manager
         /// </summary>
         /// <param name="pwd"></param>
         bool Abort(string pwd);
-
+        /// <summary>
+        /// Sets if the shutdown task can be cancelled or not.
+        /// </summary>
+        /// <param name="canCancel">Boolean value to determine if the task can cancelled or not</param>
+        void SetIsCancellable(bool canCancel);
+        bool IsTaskCancellable();
         bool IsTaskProtected();
         bool IsTaskRunning();
         void SetCountdownVisibility(bool value, int invisibilityTimeout);

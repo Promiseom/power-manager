@@ -54,6 +54,7 @@ namespace Power_Manager
                 return;
             }
 
+            bool isAborted = false;
             DialogResult rs = MessageBox.Show(this, "Abort shutdown task?", "Abort Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (rs == DialogResult.Yes)
             {
@@ -64,26 +65,23 @@ namespace Power_Manager
                     {
                         //display window for user to input password                       
                         string userEntr = PasswordInputDialog.ShowInputDialog(this, "Enter your password");
-                        if (task.Abort(userEntr))
-                        {                            
-                            return;
-                        }
-                    }while(MessageBox.Show(this, "Invalid Password", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry);
+                        isAborted = task.Abort(userEntr);
+                    } while (MessageBox.Show(this, "Invalid Password", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry);
                 }
-                try
+                else
                 {
-                    task.Abort();
-                }
-                catch (AbortFailedException arg)
-                {
-                    MessageBox.Show(this, "Failed to abort task, task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    e.Cancel = true;
+                    try
+                    {
+                        isAborted = task.Abort();
+                    }
+                    catch (AbortFailedException arg)
+                    {
+                        MessageBox.Show(this, "Failed to abort task, task is protected", "Note", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-            else
-            {
-                e.Cancel = true;
-            }
+            //countdown window only closes if the task was aborted.
+            e.Cancel = !isAborted;
         }
 
         private void btnAbortShutdown_Click(object sender, EventArgs e)

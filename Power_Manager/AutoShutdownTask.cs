@@ -19,15 +19,18 @@ namespace Power_Manager
     /// </summary>
     public class AutoShutdownTask : IShutdownTask
     {        
-        private SHUTDOWNACTION shutdownAction; //holds the index of the combo box containing the shutdown action to be performed
-        private int shutdownTime;                      //time to wait before performing shutdown
+        private SHUTDOWNACTION shutdownAction;    //holds the index of the combo box containing the shutdown action to be performed
+        private int shutdownTime;                 //time to wait before performing shutdown
         private string shutdownPassword;          //if not null, must be provided, to cancel shutdown
         private string shutdownMessage;           //message to be displayed before shutdown if provided
         private bool isProtected;                 //set to true if the task is passwordd protected
+        private bool isCancellable;               //can this task be cancelled by the user
 
-        //determines of the countdown window visible
-        //if set to be invisible, the user will have to set the time from 0 to set time
-        //when the window should appear, this is mandatory
+        /// <summary>
+        /// Determines of the countdown window visible
+        /// if set to be invisible, the user will have to set the time from 0 to set time
+        /// when the window should appear, this is mandatory
+        /// </summary>
         private bool isCountdownVisible;
         private int invisibilityTimeTout;
         private int countDownTimer;
@@ -58,7 +61,8 @@ namespace Power_Manager
         //creates a simple shutdown with action and time
         public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime)
         {
-            isProtected = false;
+            this.isProtected = false;
+            this.isCancellable = false;
             this.shutdownAction = shutdownAction;
             this.shutdownTime = shutdownTime;
             this.countDownTimer = shutdownTime;
@@ -76,27 +80,26 @@ namespace Power_Manager
         //creates an auto shutdown task with additional shutdown password and shutdown message
         public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownPassword, string shutdownMessage) : this(shutdownAction, shutdownTime)
         {
-            isProtected = true;
+            this.isProtected = true;
             this.shutdownPassword = shutdownPassword;
+        }
+
+        public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime, bool isCancellable) : this(shutdownAction, shutdownTime)
+        {
+            SetIsCancellable(isCancellable);
+        }
+
+        public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownMessage, bool isCancellable) : this(shutdownAction, shutdownTime, isCancellable)
+        {
+            this.isProtected = false;
+            this.shutdownMessage = shutdownMessage;
         }
 
         public void SetITaskListener(ITaskManager newListener)
         {
             taskListener = newListener;
         }
-
-        public bool ChangeShutdownPassword(string pwd)
-        {
-            //cannot change password after shutdown has started
-            if (isCountDownStarted) { return false; }
-            //ignore empty passwords
-            if (pwd.Length <= 0) { return false; }
-
-            this.shutdownPassword = pwd;
-            isProtected = true;
-            return true;
-        }
-
+        
         public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             while (true)
@@ -166,6 +169,16 @@ namespace Power_Manager
             return isCountDownStarted;
         }
 
+        public void SetIsCancellable(bool val)
+        {
+            this.isCancellable = val;
+        }
+
+        public bool IsTaskCancellable()
+        {
+            return this.isCancellable;
+        }
+
         public void SetCountdownVisibility(bool value)
         {
             isCountdownVisible = value;
@@ -190,6 +203,13 @@ namespace Power_Manager
         /// </summary>
         public bool Abort()
         {
+            if(!isCancellable)
+            {
+                //only non cancellable tasks can be cancelled
+                MessageBox.Show("This task cannot be aborted!", "Operation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             if (isProtected)
             {
                 throw new AbortFailedException("A password is required to abort a protected shutdown task, no password provided. Consider using Abort(string)");
