@@ -65,6 +65,7 @@ namespace Power_Manager
             this.isCancellable = false;
             this.shutdownAction = shutdownAction;
             this.shutdownTime = shutdownTime;
+            this.shutdownMessage = "No reason has been provided for the shutdown.";
             this.countDownTimer = shutdownTime;
             this.isCountDownStarted = false;
             this.backgroundWorker = new BackgroundWorker();
@@ -92,7 +93,8 @@ namespace Power_Manager
         public AutoShutdownTask(SHUTDOWNACTION shutdownAction, int shutdownTime, string shutdownMessage, bool isCancellable) : this(shutdownAction, shutdownTime, isCancellable)
         {
             this.isProtected = false;
-            this.shutdownMessage = shutdownMessage;
+            //do not set empty messages.
+            this.shutdownMessage = (String.IsNullOrEmpty(shutdownMessage))? this.shutdownMessage : shutdownMessage;
         }
 
         public void SetITaskListener(ITaskManager newListener)

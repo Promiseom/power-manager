@@ -64,6 +64,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.cbLockTask = new System.Windows.Forms.CheckBox();
+            this.cbNinjaMode = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabStatusPage.SuspendLayout();
             this.settingsPanel.SuspendLayout();
@@ -251,6 +252,7 @@
             // 
             // tabShutdownPage
             // 
+            this.tabShutdownPage.Controls.Add(this.cbNinjaMode);
             this.tabShutdownPage.Controls.Add(this.cbLockTask);
             this.tabShutdownPage.Controls.Add(this.cbHideCountdown);
             this.tabShutdownPage.Controls.Add(this.btnShutdown);
@@ -441,6 +443,19 @@
             this.toolTip.SetToolTip(this.cbLockTask, "A locked task cannot be aborted.");
             this.cbLockTask.UseVisualStyleBackColor = true;
             // 
+            // cbNinjaMode
+            // 
+            this.cbNinjaMode.AutoSize = true;
+            this.cbNinjaMode.Location = new System.Drawing.Point(415, 100);
+            this.cbNinjaMode.Name = "cbNinjaMode";
+            this.cbNinjaMode.Size = new System.Drawing.Size(80, 17);
+            this.cbNinjaMode.TabIndex = 14;
+            this.cbNinjaMode.Text = "Ninja Mode";
+            this.toolTip.SetToolTip(this.cbNinjaMode, "Also known as stealth mode, when turned on, the shutdown countdown will be hidden" +
+        " completely until the the shutdown. \r\nThe computer user will be unaware of the s" +
+        "hutdown until its too late.");
+            this.cbNinjaMode.UseVisualStyleBackColor = true;
+            // 
             // AutoShutdownManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -503,6 +518,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.CheckBox cbLockTask;
+        private System.Windows.Forms.CheckBox cbNinjaMode;
     }
 }
 

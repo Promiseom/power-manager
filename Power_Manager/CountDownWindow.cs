@@ -25,6 +25,22 @@ namespace Power_Manager
         private CountDownWindow()
         {
             InitializeComponent();
+
+            //start with minimum size (height)
+            Height = MinimumSize.Height;
+
+            SetWindowLocation();
+        }
+
+        private void SetWindowLocation()
+        {
+            //use size of screen to position window at the bottom right
+            //corner of the window screen.
+            Rectangle size = Screen.PrimaryScreen.WorkingArea;
+            int xPos = size.Width - Width;
+            int yPos = size.Height - Height;
+
+            Location = new Point(xPos + 10, yPos + 10);
         }
 
         public CountDownWindow(IShutdownTask listener):this()
@@ -87,6 +103,30 @@ namespace Power_Manager
         private void btnAbortShutdown_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnMore_Resize(object sender, EventArgs e)
+        {
+            SetWindowLocation();
+        }
+                
+        private void btnMore_Click(object sender, EventArgs e)
+        {
+            if (Height < MaximumSize.Height)
+            {
+                //increase the size of the window to reveal the message
+                Height = MaximumSize.Height;
+            }
+            else
+            {
+                //decrease the size of the window to conceal the message
+                Height = MinimumSize.Height;
+            }            
+        }
+
+        private void CountDownWindow_Resize(object sender, EventArgs e)
+        {
+            SetWindowLocation();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Power_Manager
 
         public AutoShutdownManager()
         {
-            InitializeComponent();          
+            InitializeComponent(); 
         }
 
         private void Power_Manager_Load(object sender, EventArgs e)
@@ -261,7 +261,7 @@ namespace Power_Manager
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                Hide();
+                //Hide();
                 notifyIcon.Visible = true;
             }
         }
