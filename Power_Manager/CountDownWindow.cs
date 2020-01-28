@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using SimpleComponents;
+
 namespace Power_Manager
 {
     /// <summary>
@@ -115,12 +117,16 @@ namespace Power_Manager
             if (Height < MaximumSize.Height)
             {
                 //increase the size of the window to reveal the message
-                Height = MaximumSize.Height;
+                PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MaximumSize.Height, 1000);
+                animator.Start();
+               // Height = MaximumSize.Height;
             }
             else
             {
                 //decrease the size of the window to conceal the message
-                Height = MinimumSize.Height;
+                PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MinimumSize.Height, 1000);
+                animator.Start();
+                //Height = MinimumSize.Height;
             }            
         }
 

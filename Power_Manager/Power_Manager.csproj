@@ -74,6 +74,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IShutdownTask.cs" />
+    <Compile Include="Simple Components\PropertyAnimator.cs" />
     <Compile Include="SelectionInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>

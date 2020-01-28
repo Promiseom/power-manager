@@ -17,7 +17,6 @@ C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.pdb
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\bin\Debug\Power_Manager.exe
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\bin\Debug\Power_Manager.pdb
-C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.csprojResolveAssemblyReference.cache
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.CountDownWindow.resources
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.NumericInputDialog.resources
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.PasswordInputDialog.resources
@@ -25,3 +24,4 @@ C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.SelectionInputDialog.resources
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.csproj.GenerateResource.Cache
 C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.AutoShutdownManager.resources
+C:\Users\Promise Anendah\Documents\Visual Studio 2012\Projects\Windows Software\Auto_Shutdown\Power_Manager\obj\Debug\Power_Manager.csprojResolveAssemblyReference.cache

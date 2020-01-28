@@ -107,7 +107,7 @@
             this.btnMore.Image = global::Power_Manager.Properties.Resources.arrow2;
             this.btnMore.Location = new System.Drawing.Point(164, 107);
             this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(42, 38);
+            this.btnMore.Size = new System.Drawing.Size(40, 38);
             this.btnMore.TabIndex = 5;
             this.toolTip1.SetToolTip(this.btnMore, "Click to display the shutdown message.");
             this.btnMore.UseVisualStyleBackColor = false;
