@@ -41,6 +41,7 @@ namespace SimpleComponents
         private bool isStopped;
 
         private BackgroundWorker animationPlayBack;
+        private IAnimatorListener mListener;
 
         public object AnimeObject { get { return this.animeObject; } set { animeObject = value; } }
         public AnimeProperty AnimeProperty { get { return this.property; } set { this.property = value; } }
@@ -49,6 +50,7 @@ namespace SimpleComponents
         public RepeatMode RepeatMode { get { return this.repeatMode; } set { this.repeatMode = value; } }
         public dynamic StartValue { get { return this.startInt; } set { this.startInt = value; } }
         public dynamic EndValue { get { return this.endInt; } set { this.endInt = value; } }
+        public IAnimatorListener AnimatorListener { set { this.mListener = value; } }
 
         private PropertyAnimator()
         {
@@ -90,18 +92,21 @@ namespace SimpleComponents
             isRunning = true;
             isStopped = false;
             animationPlayBack.RunWorkerAsync();
+            mListener.OnStart();
         }
 
         public void Pause()
         {
             if(isStopped) { return; }
             isRunning = false;
+            mListener.OnPause();
         }
 
         public void Resume()
         {
             if(isStopped) { return; }
             isRunning = true;
+            mListener.OnResume();
         }
 
         public void Stop()
@@ -109,6 +114,7 @@ namespace SimpleComponents
             isRunning = false;
             isStopped = true;
             animationPlayBack.CancelAsync();
+            mListener.OnStop();
         }
         
         public void DoBackgroundWork(object sender, DoWorkEventArgs e)
@@ -141,6 +147,7 @@ namespace SimpleComponents
         public void OnWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //MessageBox.Show("Animation Complete", "Finished");
+            mListener.OnComplete();
         }
     }
 }

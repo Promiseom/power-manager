@@ -170,6 +170,7 @@ namespace Power_Manager
             //task.ShutdownMessage = message;
             task.SetITaskListener(this);
             task.SetCountdownVisibility(!cbHideCountdown.Checked, invisibilityTimeout);
+            this.Visible = false;
             task.Start();
         }
 

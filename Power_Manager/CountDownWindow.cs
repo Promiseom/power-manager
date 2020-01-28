@@ -19,7 +19,7 @@ namespace Power_Manager
     /// 
     /// Shutdown message usually contains a reason for the shutdown.
     /// </summary>
-    public partial class CountDownWindow : Form
+    public partial class CountDownWindow : Form, IAnimatorListener
     {
         //used to communicate with the tasking managing this window
         IShutdownTask task;
@@ -45,7 +45,8 @@ namespace Power_Manager
             Location = new Point(xPos + 10, yPos + 10);
         }
 
-        public CountDownWindow(IShutdownTask listener):this()
+        public CountDownWindow(IShutdownTask listener)
+            : this()
         {
             task = listener;
         }
@@ -56,7 +57,7 @@ namespace Power_Manager
             newTime = newTime % 3600;
             int minutes = newTime / 60;
             newTime = newTime % 60;
-            
+
             cd_timer.Text = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, newTime);
         }
 
@@ -111,28 +112,44 @@ namespace Power_Manager
         {
             SetWindowLocation();
         }
-                
+
         private void btnMore_Click(object sender, EventArgs e)
         {
             if (Height < MaximumSize.Height)
             {
                 //increase the size of the window to reveal the message
                 PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MaximumSize.Height, 1000);
+                animator.AnimatorListener = this;
                 animator.Start();
-               // Height = MaximumSize.Height;
+                // Height = MaximumSize.Height;
             }
             else
             {
                 //decrease the size of the window to conceal the message
                 PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MinimumSize.Height, 1000);
+                animator.AnimatorListener = this;
                 animator.Start();
                 //Height = MinimumSize.Height;
-            }            
+            }
         }
 
         private void CountDownWindow_Resize(object sender, EventArgs e)
         {
             SetWindowLocation();
+        }
+
+        public void OnStart() { }
+
+        public void OnPause() { }
+
+        public void OnResume() { }
+
+        public void OnStop() {}
+
+        public void OnComplete()
+        {
+            //simply toggle visibility
+            shutdownMessage.Visible = messageLabel.Visible = !messageLabel.Visible;
         }
     }
 }

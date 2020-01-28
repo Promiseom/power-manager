@@ -30,13 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.cd_timer = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.abortShutdown = new System.Windows.Forms.Button();
             this.shutdownMessage = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnQuite = new System.Windows.Forms.Button();
             this.btnMore = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnQuite = new System.Windows.Forms.Button();
+            this.messageLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cd_timer
@@ -45,21 +44,11 @@
             this.cd_timer.BackColor = System.Drawing.SystemColors.Control;
             this.cd_timer.Font = new System.Drawing.Font("Courier New", 50.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cd_timer.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cd_timer.Location = new System.Drawing.Point(12, 33);
+            this.cd_timer.Location = new System.Drawing.Point(12, 21);
             this.cd_timer.Name = "cd_timer";
             this.cd_timer.Size = new System.Drawing.Size(350, 71);
             this.cd_timer.TabIndex = 0;
             this.cd_timer.Text = "00:00:00";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(161, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Timer";
             // 
             // abortShutdown
             // 
@@ -86,6 +75,24 @@
             this.shutdownMessage.Size = new System.Drawing.Size(353, 84);
             this.shutdownMessage.TabIndex = 3;
             this.shutdownMessage.Text = "No Message...";
+            this.shutdownMessage.Visible = false;
+            // 
+            // btnMore
+            // 
+            this.btnMore.BackColor = System.Drawing.Color.Transparent;
+            this.btnMore.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnMore.FlatAppearance.BorderSize = 0;
+            this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMore.ForeColor = System.Drawing.Color.Transparent;
+            this.btnMore.Location = new System.Drawing.Point(165, 108);
+            this.btnMore.Name = "btnMore";
+            this.btnMore.Size = new System.Drawing.Size(40, 31);
+            this.btnMore.TabIndex = 5;
+            this.btnMore.Text = "...";
+            this.toolTip1.SetToolTip(this.btnMore, "Click to display the shutdown message.");
+            this.btnMore.UseVisualStyleBackColor = false;
+            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
             // 
             // btnQuite
             // 
@@ -97,31 +104,16 @@
             this.btnQuite.Text = "0";
             this.btnQuite.UseVisualStyleBackColor = true;
             // 
-            // btnMore
+            // messageLabel
             // 
-            this.btnMore.BackColor = System.Drawing.Color.Transparent;
-            this.btnMore.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnMore.FlatAppearance.BorderSize = 0;
-            this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMore.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMore.Image = global::Power_Manager.Properties.Resources.arrow2;
-            this.btnMore.Location = new System.Drawing.Point(164, 107);
-            this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(40, 38);
-            this.btnMore.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.btnMore, "Click to display the shutdown message.");
-            this.btnMore.UseVisualStyleBackColor = false;
-            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(9, 167);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 16);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Message";
+            this.messageLabel.AutoSize = true;
+            this.messageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.messageLabel.Location = new System.Drawing.Point(9, 157);
+            this.messageLabel.Name = "messageLabel";
+            this.messageLabel.Size = new System.Drawing.Size(65, 16);
+            this.messageLabel.TabIndex = 6;
+            this.messageLabel.Text = "Message";
+            this.messageLabel.Visible = false;
             // 
             // CountDownWindow
             // 
@@ -129,11 +121,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.abortShutdown;
             this.ClientSize = new System.Drawing.Size(374, 288);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.messageLabel);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.shutdownMessage);
             this.Controls.Add(this.abortShutdown);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.cd_timer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximumSize = new System.Drawing.Size(390, 327);
@@ -152,12 +143,11 @@
         #endregion
 
         private System.Windows.Forms.Label cd_timer;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button abortShutdown;
         private System.Windows.Forms.RichTextBox shutdownMessage;
         private System.Windows.Forms.Button btnMore;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnQuite;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label messageLabel;
     }
 }
