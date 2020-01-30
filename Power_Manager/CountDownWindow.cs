@@ -115,7 +115,7 @@ namespace Power_Manager
 
         private void btnMore_Click(object sender, EventArgs e)
         {
-            
+            ToggleMessageVisibility();
         }
 
         public void ShowMessage()
@@ -136,7 +136,7 @@ namespace Power_Manager
             //Height = MinimumSize.Height;
         }
 
-        public void ToggleMessage()
+        public void ToggleMessageVisibility()
         {
             if (Height < MaximumSize.Height)
             {
@@ -165,6 +165,11 @@ namespace Power_Manager
         {
             //simply toggle visibility
             shutdownMessage.Visible = messageLabel.Visible = !messageLabel.Visible;
+        }
+
+        private void CountDownWindow_Leave(object sender, EventArgs e)
+        {
+            
         }
     }
 }
