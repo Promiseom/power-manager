@@ -46,6 +46,8 @@
             this.labelBatteryPercent = new System.Windows.Forms.Label();
             this.labelBatteryStatus = new System.Windows.Forms.Label();
             this.tabShutdownPage = new System.Windows.Forms.TabPage();
+            this.cbNinjaMode = new System.Windows.Forms.CheckBox();
+            this.cbLockTask = new System.Windows.Forms.CheckBox();
             this.cbHideCountdown = new System.Windows.Forms.CheckBox();
             this.btnShutdown = new System.Windows.Forms.Button();
             this.btnAutoShutdown = new System.Windows.Forms.Button();
@@ -63,8 +65,6 @@
             this.batteryStatusMonitor = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.cbLockTask = new System.Windows.Forms.CheckBox();
-            this.cbNinjaMode = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabStatusPage.SuspendLayout();
             this.settingsPanel.SuspendLayout();
@@ -276,6 +276,30 @@
             this.tabShutdownPage.ToolTipText = "A locked task is not abortable.";
             this.tabShutdownPage.UseVisualStyleBackColor = true;
             // 
+            // cbNinjaMode
+            // 
+            this.cbNinjaMode.AutoSize = true;
+            this.cbNinjaMode.Location = new System.Drawing.Point(415, 100);
+            this.cbNinjaMode.Name = "cbNinjaMode";
+            this.cbNinjaMode.Size = new System.Drawing.Size(80, 17);
+            this.cbNinjaMode.TabIndex = 14;
+            this.cbNinjaMode.Text = "Ninja Mode";
+            this.toolTip.SetToolTip(this.cbNinjaMode, "Also known as stealth mode, when turned on, the shutdown countdown will be hidden" +
+        " completely until the the shutdown. \r\nThe computer user will be unaware of the s" +
+        "hutdown until its too late.");
+            this.cbNinjaMode.UseVisualStyleBackColor = true;
+            // 
+            // cbLockTask
+            // 
+            this.cbLockTask.AutoSize = true;
+            this.cbLockTask.Location = new System.Drawing.Point(331, 100);
+            this.cbLockTask.Name = "cbLockTask";
+            this.cbLockTask.Size = new System.Drawing.Size(77, 17);
+            this.cbLockTask.TabIndex = 13;
+            this.cbLockTask.Text = "Lock Task";
+            this.toolTip.SetToolTip(this.cbLockTask, "A locked task cannot be aborted.");
+            this.cbLockTask.UseVisualStyleBackColor = true;
+            // 
             // cbHideCountdown
             // 
             this.cbHideCountdown.AutoSize = true;
@@ -389,7 +413,7 @@
             this.autoShutdownTime.Size = new System.Drawing.Size(117, 20);
             this.autoShutdownTime.TabIndex = 2;
             this.autoShutdownTime.Value = new decimal(new int[] {
-            5,
+            500,
             0,
             0,
             0});
@@ -431,30 +455,6 @@
             // 
             this.notifyIcon.Text = "Shutdown Manager";
             this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
-            // 
-            // cbLockTask
-            // 
-            this.cbLockTask.AutoSize = true;
-            this.cbLockTask.Location = new System.Drawing.Point(331, 100);
-            this.cbLockTask.Name = "cbLockTask";
-            this.cbLockTask.Size = new System.Drawing.Size(77, 17);
-            this.cbLockTask.TabIndex = 13;
-            this.cbLockTask.Text = "Lock Task";
-            this.toolTip.SetToolTip(this.cbLockTask, "A locked task cannot be aborted.");
-            this.cbLockTask.UseVisualStyleBackColor = true;
-            // 
-            // cbNinjaMode
-            // 
-            this.cbNinjaMode.AutoSize = true;
-            this.cbNinjaMode.Location = new System.Drawing.Point(415, 100);
-            this.cbNinjaMode.Name = "cbNinjaMode";
-            this.cbNinjaMode.Size = new System.Drawing.Size(80, 17);
-            this.cbNinjaMode.TabIndex = 14;
-            this.cbNinjaMode.Text = "Ninja Mode";
-            this.toolTip.SetToolTip(this.cbNinjaMode, "Also known as stealth mode, when turned on, the shutdown countdown will be hidden" +
-        " completely until the the shutdown. \r\nThe computer user will be unaware of the s" +
-        "hutdown until its too late.");
-            this.cbNinjaMode.UseVisualStyleBackColor = true;
             // 
             // AutoShutdownManager
             // 

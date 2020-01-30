@@ -27,7 +27,7 @@ namespace SimpleComponents
         private dynamic animeObject;                   //object to animate (must be System.Windows.Forms or System.Windows.Forms.Control).
         private AnimeProperty property;                //propery of the object to animate
         private Interpolation interpolation;           //determines acceleration of the animation.
-        private int duration;                          //(milliseconds), how long the animation will last
+        private int speedFactor;                       //determines the speed of the animation
         private RepeatMode repeatMode;                 //determines of the animation should repeat and is so how should it repeat.
         //callback goes here
         private dynamic startInt, endInt;
@@ -46,7 +46,7 @@ namespace SimpleComponents
         public object AnimeObject { get { return this.animeObject; } set { animeObject = value; } }
         public AnimeProperty AnimeProperty { get { return this.property; } set { this.property = value; } }
         public Interpolation AnimeInterpolation { get { return this.interpolation; } set { this.interpolation = value; } }
-        public int AnimeDuration { get { return this.duration; } set { this.duration = value; } }
+        public int AnimeDuration { get { return this.speedFactor; } set { this.speedFactor = value; } }
         public RepeatMode RepeatMode { get { return this.repeatMode; } set { this.repeatMode = value; } }
         public dynamic StartValue { get { return this.startInt; } set { this.startInt = value; } }
         public dynamic EndValue { get { return this.endInt; } set { this.endInt = value; } }
@@ -68,7 +68,7 @@ namespace SimpleComponents
             }
 
             this.property = prop;
-            this.duration = duration;
+            this.speedFactor = duration;
             this.startInt = startVal;
             this.endInt = endVal;
 
@@ -76,6 +76,7 @@ namespace SimpleComponents
             this.isStopped = true;
 
             rate = ((endInt - startInt) >= 0) ? 1 : -1;
+            rate *= speedFactor;
 
             //prepare the background task
             animationPlayBack = new BackgroundWorker();
@@ -119,14 +120,21 @@ namespace SimpleComponents
         
         public void DoBackgroundWork(object sender, DoWorkEventArgs e)
         {
+            //initialized only once
+            int tempStartVal = startInt;
             while (true)
             {
                 if (isRunning)
                 {
                     animationPlayBack.ReportProgress(0);     //we're not really reporting progess change
-                    if((startInt += (int)rate) == endInt)
+                    tempStartVal += (int)rate;
+                    if(startInt < endInt)
                     {
-                        break;
+                        if(tempStartVal >= endInt){break;}
+                    }
+                    else if (startInt > endInt)
+                    {
+                        if (tempStartVal <= endInt) { break; }
                     }
                     //rate += 0.015;
                 }

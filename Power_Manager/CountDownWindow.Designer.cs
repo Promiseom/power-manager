@@ -82,9 +82,8 @@
             this.btnMore.BackColor = System.Drawing.Color.Transparent;
             this.btnMore.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnMore.FlatAppearance.BorderSize = 0;
-            this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMore.ForeColor = System.Drawing.Color.Transparent;
+            this.btnMore.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.btnMore.Location = new System.Drawing.Point(165, 108);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(40, 31);

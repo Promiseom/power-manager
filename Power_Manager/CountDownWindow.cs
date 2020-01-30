@@ -115,21 +115,36 @@ namespace Power_Manager
 
         private void btnMore_Click(object sender, EventArgs e)
         {
+            
+        }
+
+        public void ShowMessage()
+        {
+            //increase the size of the window to reveal the message
+            PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MaximumSize.Height, 1);
+            animator.AnimatorListener = this;
+            animator.Start();
+            // Height = MaximumSize.Height;
+        }
+
+        public void HideMessage()
+        {
+            //decrease the size of the window to conceal the message
+            PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MinimumSize.Height, 2);
+            animator.AnimatorListener = this;
+            animator.Start();
+            //Height = MinimumSize.Height;
+        }
+
+        public void ToggleMessage()
+        {
             if (Height < MaximumSize.Height)
             {
-                //increase the size of the window to reveal the message
-                PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MaximumSize.Height, 1000);
-                animator.AnimatorListener = this;
-                animator.Start();
-                // Height = MaximumSize.Height;
+                ShowMessage();
             }
             else
             {
-                //decrease the size of the window to conceal the message
-                PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MinimumSize.Height, 1000);
-                animator.AnimatorListener = this;
-                animator.Start();
-                //Height = MinimumSize.Height;
+                HideMessage();
             }
         }
 
