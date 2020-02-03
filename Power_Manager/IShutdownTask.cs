@@ -46,5 +46,20 @@ namespace Power_Manager
         bool IsTaskProtected();
         bool IsTaskRunning();
         void SetCountdownVisibility(bool value, int invisibilityTimeout);
+        /// <summary>
+        /// Returns the shutdown message.
+        /// </summary>
+        /// <returns></returns>
+        string GetShutdownMessage();
+        /// <summary>
+        /// Returns the shutdown action that will be carries out.
+        /// </summary>
+        /// <returns></returns>
+        SHUTDOWNACTION GetShutdownAction();
+        /// <summary>
+        /// Returns the countdown time before shutdown.
+        /// </summary>
+        /// <returns></returns>
+        int GetShutdownTime();
     }
 }

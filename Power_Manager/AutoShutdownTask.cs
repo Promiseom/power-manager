@@ -65,7 +65,7 @@ namespace Power_Manager
             this.isCancellable = false;
             this.shutdownAction = shutdownAction;
             this.shutdownTime = shutdownTime;
-            this.shutdownMessage = "No reason has been provided for the shutdown.";
+            this.shutdownMessage = null;
             this.countDownTimer = shutdownTime;
             this.isCountDownStarted = false;
             this.backgroundWorker = new BackgroundWorker();
@@ -159,11 +159,6 @@ namespace Power_Manager
             cdWindow.ShowInTaskbar = isCountdownVisible;
             cdWindow.SetTimer(shutdownTime);
 
-            if (this.shutdownMessage != null)
-            {
-                cdWindow.SetMessage(this.shutdownMessage);
-            }
-
             if (taskListener != null)
             {
                 taskListener.OnTaskStarted(this);
@@ -252,5 +247,9 @@ namespace Power_Manager
         {
             return isCountDownStarted;
         }
+
+        public string GetShutdownMessage() { return shutdownMessage; }
+        public int GetShutdownTime() { return shutdownTime; }
+        public SHUTDOWNACTION GetShutdownAction() { return shutdownAction; }
     }
 }

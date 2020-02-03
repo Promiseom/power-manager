@@ -132,6 +132,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Countdown Window";
             this.TopMost = true;
+            this.Deactivate += new System.EventHandler(this.CountDownWindow_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CountDownWindow_FormClosing);
             this.Resize += new System.EventHandler(this.CountDownWindow_Resize);
             this.ResumeLayout(false);

@@ -22,7 +22,9 @@ namespace Power_Manager
     public partial class CountDownWindow : Form, IAnimatorListener
     {
         //used to communicate with the tasking managing this window
-        IShutdownTask task;
+        private IShutdownTask task;
+        private Boolean isMHidden;                                                                  //true if message is hidden
+        private const string defaultMessage = "No reason has been provided for the shutdown.";      //message to display if non has been provided by the user
 
         private CountDownWindow()
         {
@@ -30,7 +32,7 @@ namespace Power_Manager
 
             //start with minimum size (height)
             Height = MinimumSize.Height;
-
+            isMHidden = true;
             SetWindowLocation();
         }
 
@@ -49,8 +51,27 @@ namespace Power_Manager
             : this()
         {
             task = listener;
+
+            if (task == null)
+            {
+                throw new ArgumentNullException("No IShutdownTask Parent is Null, IShutdownTask is required for the component to function properly");
+            }
+
+            string receivedMsg = task.GetShutdownMessage();
+            if (!string.IsNullOrEmpty(receivedMsg))
+            {
+                SetMessage(receivedMsg);
+            }
+            else
+            {
+                SetMessage(defaultMessage);
+            }
         }
 
+        /// <summary>
+        /// Updates the count down
+        /// </summary>
+        /// <param name="newTime"></param>
         public void SetTimer(int newTime)
         {
             int hours = newTime / 3600;
@@ -124,6 +145,7 @@ namespace Power_Manager
             PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MaximumSize.Height, 1);
             animator.AnimatorListener = this;
             animator.Start();
+            this.isMHidden = false;
             // Height = MaximumSize.Height;
         }
 
@@ -133,6 +155,7 @@ namespace Power_Manager
             PropertyAnimator animator = new PropertyAnimator(this, AnimeProperty.SIZE_HEIGHT, Height, MinimumSize.Height, 2);
             animator.AnimatorListener = this;
             animator.Start();
+            this.isMHidden = true;
             //Height = MinimumSize.Height;
         }
 
@@ -166,10 +189,14 @@ namespace Power_Manager
             //simply toggle visibility
             shutdownMessage.Visible = messageLabel.Visible = !messageLabel.Visible;
         }
-
-        private void CountDownWindow_Leave(object sender, EventArgs e)
+    
+        private void CountDownWindow_Deactivate(object sender, EventArgs e)
         {
-            
+            //ignore if message is hidden
+            if (!this.isMHidden)
+            {
+                HideMessage();
+            }
         }
     }
 }
