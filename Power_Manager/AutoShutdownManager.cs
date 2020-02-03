@@ -163,13 +163,22 @@ namespace Power_Manager
             string message = shutdownMessage.Text;
             //not cancellable if checked
             bool isCancellable = !cbLockTask.Checked;
+            bool isNinjaMode = cbNinjaMode.Checked;
 
             //display the countdown window
             AutoShutdownTask task = (password.Length <= 0)? new AutoShutdownTask((SHUTDOWNACTION)action, time, message, isCancellable) : new AutoShutdownTask((SHUTDOWNACTION)action, time, password, message);
             //task.ChangeShutdownPassword(password);
             //task.ShutdownMessage = message;
             task.SetITaskListener(this);
-            task.SetCountdownVisibility(!cbHideCountdown.Checked, invisibilityTimeout);
+            if (isNinjaMode)
+            {
+                //time out is -1 so it never be visible before shutdown
+                task.SetCountdownVisibility(false, -1);
+            }
+            else
+            {
+                task.SetCountdownVisibility(!cbHideCountdown.Checked, invisibilityTimeout);
+            }
             this.Visible = false;
             task.Start();
         }
