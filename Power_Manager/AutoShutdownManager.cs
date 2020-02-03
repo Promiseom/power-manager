@@ -186,9 +186,13 @@ namespace Power_Manager
         public void OnTaskCompleted(IShutdownTask task)
         {
             btnAutoShutdown.Enabled = true;
-            btnShutdown.Enabled = true;            
-            //MessageBox.Show("Shutdown task has completed");
+            btnShutdown.Enabled = true;
             this.Visible = true;
+            //MessageBox.Show("Shutdown task has completed");
+            if (cbNinjaMode.Checked)
+            {
+                Close();
+            }
         }
 
         public void OnTaskAborted(IShutdownTask task)
